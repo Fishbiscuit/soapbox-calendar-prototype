@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic'>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="js/tabletop1.3.4.js"></script>
+    <script type="text/javascript" src='js/sheetsee.js'></script>
+    <script type="text/javascript" src='js/table.js'></script>
+    <script type="text/javascript" src='js/leaflet.markercluster.js'></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <!-- Bonus NodeSchool stylesheet option! -->
+    <!-- <link rel="stylesheet" type="text/css" href="css/nodeschool.css"> -->
+  </head>
+  <body>
+
+  <h1>NTU Events</h1>
+      <div class="search-container">
+        <form class="form-search form-inline">
+            <input type="text" class="input-medium search-query" placeholder="Search">
+            <button type="submit" class="btn">Search</button>
+        </form>
+    </div>
+
+  <div id="calendar-goes-here"></div>
+  <small>Add events to this <a href="https://docs.google.com/spreadsheets/d/1PXCfLm2on7gXBonKAtwXnC6dYpCD1unO4yFRo6mj_wE/edit?usp=sharing" target="_blank">spreadsheet</a>. Visit the GitHub <a href="http://www.github.com/jlord/sheetsee-calendar">repository</a>.</small>
+
+  </body>
+    <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+      var URL = "1PXCfLm2on7gXBonKAtwXnC6dYpCD1unO4yFRo6mj_wE"
+      Tabletop.init( { key: URL, callback: generateCalendar, simpleSheet: true } )
+    })
+  </script>
+  <script>
+  $('.form-search').on('submit',function(){return false;});
+  $('.form-search .btn').on('click', function(e){
+    var query = $.trim($(this).prevAll('.search-query').val()).toLowerCase();
+    $('div.event').each(function(){
+         var $this = $(this);
+         if($this.text().toLowerCase().indexOf(query) === -1)
+             $this.closest('div.event').fadeOut();
+        else $this.closest('div.event').fadeIn();
+    });
+});
+  </script>
+</html>
